@@ -1,3 +1,4 @@
+include_guard(GLOBAL)
 # Copies files from <source_dir> to the <target>'s output directory, preserving
 # the folder structure. Uses stamp files for fast, reliable incremental builds.
 #
@@ -34,7 +35,6 @@ function(add_copy_dir_dependency target source_dir)
     )
 
     if(rgx_INCLUDE_REGEX)
-        set(_temp_files "")
         foreach(_regex IN LISTS rgx_INCLUDE_REGEX)
             set(_sub_list "${_copy_files}")
             list(FILTER _sub_list INCLUDE REGEX "${_regex}")
