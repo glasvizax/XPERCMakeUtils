@@ -1,25 +1,25 @@
 # XPERCMakeUtils
 
-my custom cmake utils library
+My custom cmake utils library
 
-## for download library through cmake:
+## For download library through cmake:
 
 ```cmake
 include(FetchContent)
 FetchContent_Declare(
     XPERCMakeUtils
     GIT_REPOSITORY https://github.com/glasvizax/XPERCMakeUtils
-    GIT_TAG v1.1
+    GIT_TAG v1.2
     SYSTEM
 )
 
 FetchContent_MakeAvailable(XPERCMakeUtils)
 
-message(STATUS "XPERCMakeUtils source dir: ${XPERCMakeUtils_SOURCE_DIR}")
-
 list(APPEND CMAKE_MODULE_PATH "${XPERCMakeUtils_SOURCE_DIR}")
 
-# include(xper_utils)
 # include(add_copy_dir_dependency)
 # include(fetch_stb)
+# include(add_libraries_to_folder)
 ```
+
+## FetchContent adds a target 'XPERCMakeUtils' that includes all *.cmake files containing functions, improving the readability and accessibility of documentation for each function within IDEs.
