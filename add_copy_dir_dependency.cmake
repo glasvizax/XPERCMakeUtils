@@ -32,6 +32,7 @@ include(add_targets_to_folder)
 #   CONDITION       (Optional) A generator expression (e.g., $<CONFIG:Debug>) 
 #                   that evaluates to 1 or 0. If 0, the copy operation is skipped 
 #                   at build time. Defaults to "1".
+#   DESTINATION     (Optional) Copy destination. Defaults to directory where TARGET.
 #
 #   INCLUDE_REGEX   (Optional) A list of regular expressions. Only files 
 #                   matching at least one of these regexes will be copied.
@@ -40,13 +41,12 @@ include(add_targets_to_folder)
 #                   any of these regexes will NOT be copied.
 #
 # ==============================================================================
-
 function(add_copy_dir_dependency)
     cmake_parse_arguments(
         PARSE_ARGV 0 
         arg 
         "INCLUDE_ROOT" 
-        "TARGET;DIRECTORY;CONDITION" 
+        "TARGET;DIRECTORY;CONDITION;DESTINATION" 
         "INCLUDE_REGEX;EXCLUDE_REGEX"
     )
 
@@ -85,6 +85,12 @@ function(add_copy_dir_dependency)
             list(FILTER _copy_files EXCLUDE REGEX "${_regex}")
         endforeach()
     endif()
+
+    if(NOT arg_DESTINATION)
+        cmake_path(SET arg_DESTINATION "$<TARGET_FILE_DIR:${arg_TARGET}>")
+    endif()
+
+    cmake_path(SET _dest_dir "$<TARGET_FILE_DIR:${arg_TARGET}>")
     
     foreach(_file IN LISTS _copy_files)
         cmake_path(RELATIVE_PATH _file BASE_DIRECTORY "${_dir_abs}" OUTPUT_VARIABLE _path)
@@ -106,8 +112,7 @@ function(add_copy_dir_dependency)
         )
         cmake_path(GET _stamp_file PARENT_PATH _stamp_dir)
 
-        cmake_path(SET _dest_dir "$<TARGET_FILE_DIR:${arg_TARGET}>")
-        cmake_path(APPEND _dest_dir "${_parent_path}")
+        cmake_path(APPEND arg_DESTINATION "${_parent_path}" OUTPUT_VARIABLE _dest_dir)
         cmake_path(APPEND _dest_dir "${_name}" OUTPUT_VARIABLE _dest_path)
 
         if(NOT arg_CONDITION)

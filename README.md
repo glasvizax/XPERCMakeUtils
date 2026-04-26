@@ -9,7 +9,7 @@ include(FetchContent)
 FetchContent_Declare(
     XPERCMakeUtils
     GIT_REPOSITORY https://github.com/glasvizax/XPERCMakeUtils
-    GIT_TAG v1.2
+    GIT_TAG v1.3
     SYSTEM
 )
 
