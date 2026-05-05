@@ -1,10 +1,12 @@
 include_guard(GLOBAL)
+# This is a helper file that includes all .cmake files in it's directory
 
-cmake_path(SET __current_path ${CMAKE_CURRENT_LIST_DIR})
-cmake_path(APPEND __current_path "*.cmake" OUTPUT_VARIABLE __current_path_glob)
+cmake_path(APPEND ${CMAKE_CURRENT_LIST_DIR} "*.cmake" OUTPUT_VARIABLE current_path_glob)
 
-file(GLOB_RECURSE __xper_util_files ${__current_path_glob})
+file(GLOB_RECURSE xper_utils_files ${current_path_glob})
 
-foreach(__file IN LISTS __xper_util_files)
-    include(${__file})
+foreach(file IN LISTS xper_utils_files)
+    include(${file})
 endforeach()
+
+return(PROPAGATE xper_utils_files)

@@ -1,32 +1,29 @@
 include_guard(GLOBAL)
-# Downloads stb headers, generates a single implementation file, and creates
-# a `stb` library target with the downloaded directory added to its include path.
-# Arguments:
-#   HEADERS   A list of stb headers to fetch. Each item may be given with or
-#             without the `.h` extension, for example:
-#             `stb_image` or `stb_image.h`.
-#   SRC_PATH  Optional base directory where the `stb/` folder will be created.
-#             If omitted, the function uses the current binary directory when
-#             available, otherwise it falls back to the current function list
-#             directory.
+#[==[
+DESCRIPTION:
+    Downloads stb headers, generates a single implementation file, and creates
+    a `stb` library target with the downloaded directory added to its include path.
+ 
+SYNOPSIS:
+    fetch_stb(HEADERS stb_header... [DOWNLOAD_PATH download_path])
+ 
+ARGUMENTS:
+    HEADERS         (Required) A list of stb headers to fetch. Each item may be given with or
+                    without the `.h` extension, for example:
+                    `stb_image` or `stb_image.h`.
+ 
+    DOWNLOAD_PATH   (Optional) Base directory where the `stb/` folder will be created.
+                    If omitted, the function uses the CMAKE_BINARY_DIR when
+                    available, otherwise it falls back to the CMAKE_CURRENT_FUNCTION_LIST_DIR.
+]==]
 
-# Downloads stb headers, generates a single implementation file, and creates
-# a `stb` library target with the downloaded directory added to its include path.
-# Arguments:
-#   HEADERS   A list of stb headers to fetch. Each item may be given with or
-#             without the `.h` extension, for example:
-#             `stb_image` or `stb_image.h`.
-#   SRC_PATH  Optional base directory where the `stb/` folder will be created.
-#             If omitted, the function uses the current binary directory when
-#             available, otherwise it falls back to the current function list
-#             directory.
 function(fetch_stb)
-    cmake_parse_arguments(PARSE_ARGV 0 args "" "SRC_PATH" "HEADERS")
+    cmake_parse_arguments(PARSE_ARGV 0 args "" "DOWNLOAD_PATH" "HEADERS")
 
-    if(args_SRC_PATH)
-        set(_stb_dir "${args_SRC_PATH}")
-    elseif(IS_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-        set(_stb_dir "${CMAKE_CURRENT_BINARY_DIR}")
+    if(args_DOWNLOAD_PATH)
+        set(_stb_dir "${args_DOWNLOAD_PATH}")
+    elseif(IS_DIRECTORY ${CMAKE_BINARY_DIR})
+        set(_stb_dir "${CMAKE_BINARY_DIR}")
     else()
         set(_stb_dir "${CMAKE_CURRENT_FUNCTION_LIST_DIR}")
     endif()

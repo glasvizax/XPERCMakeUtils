@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.30)
 
-project(XPERCMakeUtils VERSION 1.2)
+project(XPERCMakeUtils VERSION 1.4)
 
-cmake_path(SET __current_path ${CMAKE_CURRENT_SOURCE_DIR})
-cmake_path(APPEND __current_path "*.cmake" OUTPUT_VARIABLE __current_path_glob)
+include(xper_utils.cmake)
 
-file(GLOB_RECURSE __xper_util_files ${__current_path_glob})
-
-add_library(XPER_CMakeUtils INTERFACE EXCLUDE_FROM_ALL ${__xper_util_files})
+add_library(XPER_CMakeUtils INTERFACE EXCLUDE_FROM_ALL ${xper_utils_files})
 
 add_library(XPER::CMakeUtils ALIAS XPER_CMakeUtils)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
+
+return(PROPAGATE CMAKE_MODULE_PATH)

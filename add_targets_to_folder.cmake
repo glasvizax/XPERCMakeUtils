@@ -1,14 +1,19 @@
 include_guard(GLOBAL)
-
-# Assigns a specified IDE folder to a list of targets for better project organization.
-# Arguments:
-#   FOLDER  The target folder name used by IDEs (e.g., Visual Studio, Xcode).
-#   
-#   TARGETS A list of targets to assign to the specified folder.
-#           For each target in TARGETS, the function resolves possible ALIASED_TARGET references
-#           and applies the FOLDER property so that the targets are grouped under the given
-#           folder in the project structure.
-
+#[==[
+DESCRIPTION:
+    Assigns a specified IDE folder to a list of targets for better project organization.
+ 
+SYNOPSIS:
+    add_targets_to_folder(FOLDER folder TARGETS tgt...)
+ 
+ARGUMENTS:
+    FOLDER  (Required) The target folder name used by IDEs (e.g., Visual Studio, Xcode).
+    
+    TARGETS (Required) A list of targets to assign to the specified folder.
+            For each target in TARGETS, the function resolves possible aliases
+            and applies the FOLDER property so that the targets are grouped under the given
+            folder in the project structure.
+]==]
 function(add_targets_to_folder)
     cmake_parse_arguments(PARSE_ARGV 0 "args" "" "FOLDER" "TARGETS")
     set_property(

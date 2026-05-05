@@ -9,13 +9,11 @@ include(FetchContent)
 FetchContent_Declare(
     XPERCMakeUtils
     GIT_REPOSITORY https://github.com/glasvizax/XPERCMakeUtils
-    GIT_TAG v1.3
+    GIT_TAG v1.4
     SYSTEM
 )
 
 FetchContent_MakeAvailable(XPERCMakeUtils)
-
-list(APPEND CMAKE_MODULE_PATH "${XPERCMakeUtils_SOURCE_DIR}")
 
 # include(add_copy_dir_dependency)
 # include(fetch_stb)

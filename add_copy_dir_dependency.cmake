@@ -1,46 +1,43 @@
 include_guard(GLOBAL)
-include(add_targets_to_folder)
+include(add_targets_to_folder.cmake)
 
-# ==============================================================================
-# add_copy_dir_dependency
-# ==============================================================================
-#
-# Copies the contents of a directory to a target's output directory during the
-# build phase. It creates custom commands for incremental copying and sets up
-# the required build dependencies.
-#
-# SYNOPSIS:
-#   add_copy_dir_dependency(
-#       TARGET <target>
-#       DIRECTORY <dir>
-#       [INCLUDE_ROOT]
-#       [CONDITION <genex>]
-#       [INCLUDE_REGEX <regex>...]
-#       [EXCLUDE_REGEX <regex>...]
-#   )
-#
-# OPTIONS:
-#   TARGET          (Required) The existing target whose output directory 
-#                   will be the destination.
-#
-#   DIRECTORY       (Required) The source directory to copy. Can be an absolute 
-#                   path or a relative path to CMAKE_CURRENT_SOURCE_DIR.
-#
-#   INCLUDE_ROOT    (Optional) If present, the base directory itself is created 
-#                   in the destination, rather than just copying its contents.
-#
-#   CONDITION       (Optional) A generator expression (e.g., $<CONFIG:Debug>) 
-#                   that evaluates to 1 or 0. If 0, the copy operation is skipped 
-#                   at build time. Defaults to "1".
-#   DESTINATION     (Optional) Copy destination. Defaults to directory where TARGET.
-#
-#   INCLUDE_REGEX   (Optional) A list of regular expressions. Only files 
-#                   matching at least one of these regexes will be copied.
-#
-#   EXCLUDE_REGEX   (Optional) A list of regular expressions. Files matching 
-#                   any of these regexes will NOT be copied.
-#
-# ==============================================================================
+#[==[
+DESCRIPTION:
+    Copies the contents of a directory to a target's output directory during the
+    build phase. It creates custom commands for incremental copying and sets up
+    the required build dependencies.
+ 
+SYNOPSIS:
+    add_copy_dir_dependency(
+        TARGET <target>
+        DIRECTORY <dir>
+        [INCLUDE_ROOT]
+        [CONDITION <genex>]
+        [INCLUDE_REGEX <regex>...]
+        [EXCLUDE_REGEX <regex>...]
+    )
+ 
+ARGUMENTS:
+    TARGET          (Required) The existing target whose for witch will be added
+                    dependency
+ 
+    DIRECTORY       (Required) The source directory to copy. Can be an absolute 
+                    path or a relative path to CMAKE_CURRENT_SOURCE_DIR.
+ 
+    INCLUDE_ROOT    (Optional) If present, the base directory itself is created 
+                    in the destination, rather than just copying its contents.
+ 
+    CONDITION       (Optional) A generator expression (e.g., $<CONFIG:Debug>) 
+                    that evaluates to 1 or 0. If 0, the copy operation is skipped 
+                    at build time. Defaults to "1".
+    DESTINATION     (Optional) Copy destination. Defaults to directory where TARGET.
+ 
+    INCLUDE_REGEX   (Optional) A list of regular expressions. Only files 
+                    matching at least one of these regexes will be copied.
+ 
+    EXCLUDE_REGEX   (Optional) A list of regular expressions. Files matching 
+                    any of these regexes will NOT be copied.
+]==]
 function(add_copy_dir_dependency)
     cmake_parse_arguments(
         PARSE_ARGV 0 
