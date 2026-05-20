@@ -1,5 +1,5 @@
 include_guard(GLOBAL)
-include(add_targets_to_folder.cmake)
+include(prepend_folder_to_targets.cmake)
 
 #[==[
 DESCRIPTION:
@@ -134,6 +134,6 @@ function(add_copy_dir_dependency)
         string(MAKE_C_IDENTIFIER "${arg_TARGET}_${_dir_rel}_copy_files" _tgt_name)
         add_custom_target(${_tgt_name} DEPENDS ${_stamp_files})
         add_dependencies("${arg_TARGET}" ${_tgt_name})
-        add_targets_to_folder(FOLDER "XPERInternalTargets" TARGETS ${_tgt_name})
+        prepend_folder_to_targets(FOLDER "XPERInternalTargets" TARGETS ${_tgt_name})
     endif()
 endfunction()
